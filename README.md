@@ -45,6 +45,21 @@ Each game increases in complexity.
 - Coordinate system (top-left origin)
 - Position as center vs corner
 
+## Day 2 – Player Movement & Delta Time
+
+### Implemented:
+- Player paddle movement (W/S)
+- Movement independent from FPS using delta time
+- Paddle speed defined in pixels per second
+- Screen boundary clamping
+- Removed magic numbers using `const` variables
+
+### Concepts Learned:
+- `if` conditions
+- Modifying variables (`+=`, `-=`)
+- `GetFrameTime()` and delta time
+- Frame-rate independent movement
+- Variable scope (state must live outside the game loop)
 ---
 
 More updates coming daily 🚀
