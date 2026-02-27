@@ -1,16 +1,26 @@
 # 31 Days of C++ & Raylib
 
+![C++](https://img.shields.io/badge/C++-17-blue)
+![CMake](https://img.shields.io/badge/CMake-3.20+-green)
+![Raylib](https://img.shields.io/badge/Raylib-5.0-orange)
+![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
+
 A personal challenge:  
 Learning modern C++ through game development using raylib.
 
-## Goal
+---
 
-Build 5 small games in 31 days to deeply understand:
-- C++ fundamentals
-- Game loops
-- Rendering
-- Input handling
-- Game architecture
+## 🚀 About This Project
+
+This repository documents my 31-day journey of learning C++ by building small games from scratch.
+
+The goal is not to follow tutorials blindly, but to deeply understand:
+- how game loops work
+- how rendering pipelines function
+- how C++ manages memory
+- how game architecture evolves over time
+
+Each game increases in complexity.
 
 ---
 
@@ -26,7 +36,7 @@ Build 5 small games in 31 days to deeply understand:
 - FPS limit (120)
 - Drawing rectangle on screen
 
-### Concepts learned:
+### Concepts Learned:
 - `int`
 - `while` loop
 - Boolean logic (`!`)
