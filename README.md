@@ -5,112 +5,77 @@
 ![Raylib](https://img.shields.io/badge/Raylib-5.0-orange)
 ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
 
-A personal challenge:  
-Learning modern C++ through game development using raylib.
+A personal challenge: learning C++ by building games with raylib. I want to understand how things work under the hood, not just copy from tutorials – game loop, rendering, memory in C++, how complexity grows. Each game a bit harder than the last.
 
 ---
 
-## 🚀 About This Project
+## About this project
 
-This repository documents my 31-day journey of learning C++ by building small games from scratch.
-
-The goal is not to follow tutorials blindly, but to deeply understand:
-- how game loops work
-- how rendering pipelines function
-- how C++ manages memory
-- how game architecture evolves over time
-
-Each game increases in complexity.
+Notes from 31 days – small games from scratch. Focus on:
+- how the game loop works
+- how the rendering pipeline fits together
+- how C++ handles memory
+- how architecture changes as the project grows
 
 ---
 
-# 🎮 Game 1: Pong (Day 1–7)
+# Game 1: Pong (Day 1–7)
 
-## Day 1 – Window & Game Loop
+## Day 1 – Window and game loop
 
-### Implemented:
-- CMake project setup
-- raylib integration via FetchContent
-- Basic game loop using `while`
-- Window 800x600
-- FPS limit (120)
-- Drawing rectangle on screen
+**Done:** CMake setup, raylib via FetchContent, basic `while` loop, 800x600 window, 120 FPS, drawing a rectangle.
 
-### Concepts Learned:
-- `int`
-- `while` loop
-- Boolean logic (`!`)
-- Game loop structure
-- FPS control with `SetTargetFPS`
-- Coordinate system (top-left origin)
-- Position as center vs corner
+**Learned:** `int`, `while` loop, `!` in conditions, game loop structure, `SetTargetFPS`, coordinate system (top-left origin), position as center vs corner.
 
-## Day 2 – Player Movement & Delta Time
+## Day 2 – Player movement and delta time
 
 ### Implemented:
 - Player paddle movement (W/S)
 - Movement independent from FPS using delta time
-- Paddle speed defined in pixels per second
-- Screen boundary clamping
-- Removed magic numbers using `const` variables
+- Paddle speed in pixels per second
+- Clamping to screen edges
+- Constants instead of magic numbers
 
 ### Concepts Learned:
-- `if` conditions
-- Modifying variables (`+=`, `-=`)
+- `if`, `+=` / `-=`
 - `GetFrameTime()` and delta time
 - Frame-rate independent movement
-- Variable scope (state must live outside the game loop)
+- State variables need to live outside the loop
 
-## Day 3 – Second Paddle & Simple AI
+## Day 3 – Second paddle and simple AI
 
-### Implemented:
-- Second paddle on the right side
-- Simple AI that follows the ball (using paddle center)
-- Dead zone to prevent constant micro-movement
-- Screen boundary clamping for AI paddle
+Second paddle on the right. AI chases the ball (paddle center), with a dead zone so it doesn’t jitter. Clamp AI paddle to screen. More variables per object (x, y, width, height, speed), comparisons in conditions, `else if` for clearer logic.
 
-### Concepts Learned:
-- Multiple variables describing one game object (x, y, width, height, speed)
-- Comparing values to drive behavior
-- Cleaner logic using `else if`
+## Day 4 – Ball physics and collisions
 
-## Day 4 – Ball Physics & Collisions
+**Done:** Ball movement via `ballVelX`/`ballVelY`, delta time, bounce off top and bottom, collision with paddles (`CheckCollisionCircleRec`), direction check to avoid sticky bounce, ball reset to center when it leaves the screen.
 
-### Implemented:
-- Ball movement using velocity (`ballVelX`, `ballVelY`)
-- Frame-rate independent motion using delta time
-- Bounce from top and bottom screen edges
-- Collision detection with paddles using `CheckCollisionCircleRec`
-- Direction-aware collision handling (prevent sticky bounce)
-- Ball reset to center after leaving screen
+**Learned:** `position += velocity * dt`, `velocity *= -1`, circle–rectangle collision, raylib `Rectangle`/`Vector2`, avoiding repeated collision triggers.
 
-### Concepts Learned:
-- Position update: `position += velocity * deltaTime`
-- Inverting direction using `velocity *= -1`
-- Circle vs Rectangle collision detection
-- Using structs from raylib (`Rectangle`, `Vector2`)
-- Preventing repeated collision triggers using direction checks
+## Day 5 – Scoring and AI imperfection
 
-## Day 5 – Scoring System & AI Imperfection
+Score for player and AI when ball leaves the screen, drawing with `DrawText`/`TextFormat`. AI gets a random offset so it’s beatable. Fixed collision (no sticking). Solved: magic numbers → constants, ball sticking to paddle.
 
-### Implemented:
-- Score system for Player and AI
-- Score increment on ball exit
-- Score rendering using `DrawText` and `TextFormat`
-- AI imperfection using randomized offset
-- Improved collision handling to prevent sticky bounce
+**Concepts Learned:** `++`, formatting numbers for display, separating game logic from AI “perception”, balancing with parameters.
 
-### Problems Solved:
-- Ball sticking to paddle due to repeated collision detection
-- AI being too perfect and unbeatable
-- Magic numbers replaced with configurable constants
+## Day 6 – Game states and centered text
 
-### Concepts Learned:
-- Incrementing integers (`++`)
-- Formatting numbers for rendering
-- Separating game logic from AI perception
-- Game balancing through parameter tuning
+`enum class GameState` (MENU, PLAYING, GAMEOVER), start on ENTER. Ball movement, collisions and scoring only in PLAYING. Update vs draw separation. Text centered with `MeasureText` instead of hardcoded offsets.
+
+**Learned:** `enum class`, `::`, state-driven flow, update vs render, UI positioning from text width.
+
+## Day 7 – Win condition, game over, restart
+
+Win at first to 5 points, transition to GAMEOVER, show who won. Restart on ENTER – full reset (scores, ball, paddles, AI offset). Transitions: MENU → PLAYING → GAMEOVER → MENU.
+
+**Concepts Learned:** Full gameplay lifecycle, safe reset of state, predictable state transitions.
 
 ---
 
-More updates coming daily 🚀
+## Technical – Pong in short
+
+Single loop `while (!WindowShouldClose())`, movement on delta time. State machine with `enum class GameState`; gameplay logic only in PLAYING, UI depends on state. Update: input, movement, collisions, scoring. Render: all `Draw*` inside `BeginDrawing()`/`EndDrawing()`. Circle–rect collision, direction-aware bounce to avoid sticking. Score on ball exit + reset to center. Text centered via `MeasureText`.
+
+---
+
+Updates as I go.
