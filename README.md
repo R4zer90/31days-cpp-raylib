@@ -74,6 +74,23 @@ Each game increases in complexity.
 - Comparing values to drive behavior
 - Cleaner logic using `else if`
 
+## Day 4 – Ball Physics & Collisions
+
+### Implemented:
+- Ball movement using velocity (`ballVelX`, `ballVelY`)
+- Frame-rate independent motion using delta time
+- Bounce from top and bottom screen edges
+- Collision detection with paddles using `CheckCollisionCircleRec`
+- Direction-aware collision handling (prevent sticky bounce)
+- Ball reset to center after leaving screen
+
+### Concepts Learned:
+- Position update: `position += velocity * deltaTime`
+- Inverting direction using `velocity *= -1`
+- Circle vs Rectangle collision detection
+- Using structs from raylib (`Rectangle`, `Vector2`)
+- Preventing repeated collision triggers using direction checks
+
 ---
 
 More updates coming daily 🚀

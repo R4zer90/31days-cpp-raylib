@@ -12,6 +12,10 @@ int main()
     float ballY = screenHeight / 2;
     float ballX = screenWidth / 2;
     const float deadZone = 10.0f;
+    float ballVelX = 250.0f;
+    float ballVelY = 180.0f;
+    const float ballRadius = 10.0f;
+
 
     InitWindow(screenWidth, screenHeight, "Pong");
     SetTargetFPS(120);
@@ -58,8 +62,49 @@ int main()
         //Drawing Paddle AI 
         DrawRectangle((screenWidth-paddleWidth), paddleAI, paddleWidth, paddleHeight, WHITE);
 
+        //Move the Ball
+        ballX += ballVelX * dt;
+        ballY += ballVelY * dt;
+
+        if (ballY - ballRadius <= 0) {
+            ballVelY *= -1;
+        }
+
+        if (ballY + ballRadius >= screenHeight) {
+            ballVelY *= -1;
+        }
+
         //Drawing Ball
-        DrawCircle(ballX, ballY, 10, WHITE);
+        DrawCircle(ballX, ballY, ballRadius, WHITE);
+
+        //Collision System
+        Rectangle p1Rect{0, paddleP1, paddleWidth, paddleHeight};
+        Rectangle aiRect{(screenWidth - paddleWidth), paddleAI,paddleWidth, paddleHeight };
+        Vector2 ballPos{ ballX , ballY };
+        
+        if (CheckCollisionCircleRec(ballPos , ballRadius, p1Rect)){
+            if(ballVelX < 0){
+            ballVelX *= -1;
+            }
+        }
+        if (CheckCollisionCircleRec(ballPos, ballRadius, aiRect)) {
+            if (ballVelX > 0) {
+                ballVelX *= -1;
+            }
+        }
+        
+        //Point System
+        if (ballX - ballRadius < 0) {
+            ballY = screenHeight / 2;
+            ballX = screenWidth / 2;
+            ballVelX *= -1;
+            
+        }
+        if (ballX + ballRadius > screenWidth) {
+            ballY = screenHeight / 2;
+            ballX = screenWidth / 2;
+            ballVelX *= -1;            
+        }
 
         EndDrawing();
     }
