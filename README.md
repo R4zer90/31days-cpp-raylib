@@ -60,6 +60,20 @@ Each game increases in complexity.
 - `GetFrameTime()` and delta time
 - Frame-rate independent movement
 - Variable scope (state must live outside the game loop)
+
+## Day 3 – Second Paddle & Simple AI
+
+### Implemented:
+- Second paddle on the right side
+- Simple AI that follows the ball (using paddle center)
+- Dead zone to prevent constant micro-movement
+- Screen boundary clamping for AI paddle
+
+### Concepts Learned:
+- Multiple variables describing one game object (x, y, width, height, speed)
+- Comparing values to drive behavior
+- Cleaner logic using `else if`
+
 ---
 
 More updates coming daily 🚀
