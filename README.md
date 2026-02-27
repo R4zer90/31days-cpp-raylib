@@ -91,6 +91,26 @@ Each game increases in complexity.
 - Using structs from raylib (`Rectangle`, `Vector2`)
 - Preventing repeated collision triggers using direction checks
 
+## Day 5 – Scoring System & AI Imperfection
+
+### Implemented:
+- Score system for Player and AI
+- Score increment on ball exit
+- Score rendering using `DrawText` and `TextFormat`
+- AI imperfection using randomized offset
+- Improved collision handling to prevent sticky bounce
+
+### Problems Solved:
+- Ball sticking to paddle due to repeated collision detection
+- AI being too perfect and unbeatable
+- Magic numbers replaced with configurable constants
+
+### Concepts Learned:
+- Incrementing integers (`++`)
+- Formatting numbers for rendering
+- Separating game logic from AI perception
+- Game balancing through parameter tuning
+
 ---
 
 More updates coming daily 🚀
