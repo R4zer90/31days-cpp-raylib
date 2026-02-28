@@ -16,6 +16,12 @@ struct Bullet {
 	float y;
 };
 
+struct Enemy {
+	float x;
+	float y;
+	bool alive;
+};
+
 int main() {
 	const int screenWidth = 800;
 	const int screenHeight = 600;
@@ -28,6 +34,19 @@ int main() {
 	const float bulletSpeed = 500;
 	const float bulletRadius = 5.0f;
 	std::vector<Bullet> bullets;
+	std::vector<Enemy> enemies;
+
+	float startX = 10;
+	float startY = 10;
+	int spacing = 100;
+	int count = 8;
+	for (int i = 0; i < count; i++) {
+		Enemy e;
+		e.x = startX + i * spacing;
+		e.y = startY;
+		e.alive = true;
+		enemies.push_back(e);
+	}
 
 	InitWindow(screenWidth, screenHeight,"SpaceShooter");
 	SetTargetFPS(120);
@@ -82,6 +101,14 @@ int main() {
 		for (auto& bullet : bullets) {
 			DrawCircle(bullet.x, bullet.y, bulletRadius, WHITE);
 		}
+
+		//Draw Enemies
+		for (auto& e : enemies) {
+			if (e.alive){
+				DrawRectangle(e.x, e.y, 20, 20, WHITE);
+			}
+		}
+
 		EndDrawing();
 	}
 	CloseWindow();

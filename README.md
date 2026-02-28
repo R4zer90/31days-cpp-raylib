@@ -109,6 +109,12 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Implemented erase–remove idiom with lambda
 - Automatic cleanup when bullets leave screen
 
+### Day 10
+- Created `struct Enemy` with x, y and alive flag
+- Stored enemies in `std::vector`
+- Generated a row of enemies using a for loop
+- Rendered enemies conditionally based on alive state
+
 ---
 
 ## Concepts
@@ -122,11 +128,31 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Range-based for loop
 - Lambda expressions
 - `std::remove_if` and erase–remove idiom
+- `struct` for data modeling
+- `std::vector<CustomType>`
+- Object grouping and data abstraction
 
 ### Architecture
 - Update vs Draw separation
 - Center-based object positioning
 - Reusable helper function (`clamp`)
+
+### Raylib
+- `DrawTriangle`
+- `DrawCircle`
+- `DrawRectangle`
+- `IsKeyDown`
+- `IsKeyPressed`
+- `GetFrameTime`
+
+---
+
+## Technical Summary
+
+Enemies are represented using a custom struct and stored inside a std::vector.
+A procedural row of enemies is generated using a loop and calculated spacing.
+Bullets and enemies are updated independently and rendered via iteration.
+Dead objects are filtered using logical state flags.
 
 ---
 
