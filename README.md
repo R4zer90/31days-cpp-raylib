@@ -101,6 +101,14 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Custom `clamp` function
 - Screen boundary restriction
 
+### Day 9
+- Introduced `struct Bullet`
+- Added `std::vector<Bullet>` for dynamic bullets
+- Implemented shooting with SPACE key
+- Frame-independent bullet movement
+- Implemented erase–remove idiom with lambda
+- Automatic cleanup when bullets leave screen
+
 ---
 
 ## Concepts
@@ -110,6 +118,10 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Custom clamp implementation
 - Frame-independent movement
 - Float vs int division awareness
+- `std::vector`
+- Range-based for loop
+- Lambda expressions
+- `std::remove_if` and erase–remove idiom
 
 ### Architecture
 - Update vs Draw separation
