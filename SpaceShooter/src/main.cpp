@@ -35,11 +35,17 @@ int main() {
 	const float bulletRadius = 5.0f;
 	std::vector<Bullet> bullets;
 	std::vector<Enemy> enemies;
+	const float enemySpeed = 100.0f;
+	int enemyDirectionX = 1;
+	const int enemySize = 20;
+	const int enemyDrop = 10;
+	
 
 	float startX = 10;
 	float startY = 10;
 	int spacing = 100;
 	int count = 8;
+
 	for (int i = 0; i < count; i++) {
 		Enemy e;
 		e.x = startX + i * spacing;
@@ -86,6 +92,25 @@ int main() {
 			bullets.end()
 		);
 	
+		//enemy logic
+		bool shouldChangeDirection = false;
+		for (auto& e : enemies) {
+			if (e.alive) {
+				e.x += enemySpeed * enemyDirectionX * dt;
+			}
+			if (e.alive && (e.x <= 0 || e.x >= screenWidth - enemySize)) {
+				shouldChangeDirection = true;
+			}
+		}
+		if (shouldChangeDirection == true) {
+			enemyDirectionX *= -1;
+			for (auto& e : enemies) {
+				if (e.alive) {
+					e.y += enemyDrop;
+					
+				}
+			}
+		}
 		
 		//##Drawing - Game Graphic ;)
 		BeginDrawing();
@@ -105,7 +130,7 @@ int main() {
 		//Draw Enemies
 		for (auto& e : enemies) {
 			if (e.alive){
-				DrawRectangle(e.x, e.y, 20, 20, WHITE);
+				DrawRectangle(e.x, e.y, enemySize, enemySize, WHITE);
 			}
 		}
 

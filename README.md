@@ -115,6 +115,13 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Generated a row of enemies using a for loop
 - Rendered enemies conditionally based on alive state
 
+### Day 11
+- Implemented classic Space Invaders style movement
+- Added shared horizontal direction for enemy wave
+- Edge detection using boundary checks (<= / >=)
+- Direction reversal with vertical drop
+- Introduced wave-based movement logic
+
 ---
 
 ## Concepts
@@ -131,11 +138,16 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - `struct` for data modeling
 - `std::vector<CustomType>`
 - Object grouping and data abstraction
+- Boolean flag for state detection
+- Conditional direction reversal
+- Avoiding float equality comparison (`<= / >=` instead of `==`)
 
 ### Architecture
 - Update vs Draw separation
 - Center-based object positioning
 - Reusable helper function (`clamp`)
+- Wave-level shared behavior (direction not stored per enemy)
+- Post-loop decision execution pattern
 
 ### Raylib
 - `DrawTriangle`
@@ -153,6 +165,9 @@ Enemies are represented using a custom struct and stored inside a std::vector.
 A procedural row of enemies is generated using a loop and calculated spacing.
 Bullets and enemies are updated independently and rendered via iteration.
 Dead objects are filtered using logical state flags.
+Enemy movement is controlled at wave level using a shared direction variable.
+Boundary detection sets a flag that triggers vertical drop and direction reversal.
+Decisions are executed after iteration to maintain deterministic frame logic.
 
 ---
 
