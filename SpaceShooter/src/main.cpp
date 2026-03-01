@@ -14,6 +14,7 @@ float clamp(float value, float min, float max) {
 struct Bullet {
 	float x;
 	float y;
+	bool alive;
 };
 
 struct Enemy {
@@ -73,24 +74,51 @@ int main() {
 			Bullet bullet;
 			bullet.x = shipX;
 			bullet.y = shipY - shipHeight / 2;
+			bullet.alive = true;
 			bullets.push_back(bullet);
 		}
 		
 		//bullets logic
 		for (auto& bullet : bullets) {
 			bullet.y -= bulletSpeed * dt;
+			for (auto& e : enemies) {
+				if (!e.alive) continue;
+
+				float enemyLeft = e.x;
+				float enemyRight = e.x + enemySize;
+				float enemyTop = e.y;
+				float enemyBottom = e.y + enemySize;
+
+				// bullet rect (x,y as center)
+				float bulletLeft = bullet.x - bulletRadius;
+				float bulletRight = bullet.x + bulletRadius;
+				float bulletTop = bullet.y - bulletRadius;
+				float bulletBottom = bullet.y + bulletRadius;
+
+				bool overlapX = (bulletRight >= enemyLeft) && (bulletLeft <= enemyRight);
+				bool overlapY = (bulletBottom >= enemyTop) && (bulletTop <= enemyBottom);
+
+				if (overlapX && overlapY) {
+					e.alive = false;
+					bullet.alive = false;
+					break;
+				}
+			}
+
 		}
 
 		bullets.erase(
 			std::remove_if(
 				bullets.begin(),
 				bullets.end(),
-				[bulletRadius](Bullet bullet) {
-					return bullet.y < -bulletRadius;
+				[bulletRadius](const Bullet& bullet) {
+					return bullet.y < -bulletRadius || !bullet.alive;
 				}
 			),
 			bullets.end()
 		);
+
+		
 	
 		//enemy logic
 		bool shouldChangeDirection = false;
@@ -112,6 +140,15 @@ int main() {
 			}
 		}
 		
+		enemies.erase(
+			std::remove_if(
+				enemies.begin(),
+				enemies.end(),
+				[](const Enemy& e) { return !e.alive; }
+			),
+			enemies.end()
+		);
+
 		//##Drawing - Game Graphic ;)
 		BeginDrawing();
 		ClearBackground(BLACK);
@@ -129,9 +166,7 @@ int main() {
 
 		//Draw Enemies
 		for (auto& e : enemies) {
-			if (e.alive){
-				DrawRectangle(e.x, e.y, enemySize, enemySize, WHITE);
-			}
+			DrawRectangle(e.x, e.y, enemySize, enemySize, WHITE);
 		}
 
 		EndDrawing();

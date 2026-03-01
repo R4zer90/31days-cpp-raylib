@@ -122,6 +122,13 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Direction reversal with vertical drop
 - Introduced wave-based movement logic
 
+### Day 12
+- Implemented bullet–enemy collision (rectangle approximation)
+- Added nested iteration (bullets × enemies)
+- Introduced `alive` lifecycle flag for bullets
+- Removed bullets and enemies using erase–remove idiom
+- Prevented multi-kill per bullet using `break`
+
 ---
 
 ## Concepts
@@ -141,6 +148,10 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Boolean flag for state detection
 - Conditional direction reversal
 - Avoiding float equality comparison (`<= / >=` instead of `==`)
+- Nested loops (collision detection)
+- Lifecycle management using flags
+- Advanced erase–remove usage
+- Iterator safety and post-loop cleanup
 
 ### Architecture
 - Update vs Draw separation
@@ -168,6 +179,9 @@ Dead objects are filtered using logical state flags.
 Enemy movement is controlled at wave level using a shared direction variable.
 Boundary detection sets a flag that triggers vertical drop and direction reversal.
 Decisions are executed after iteration to maintain deterministic frame logic.
+Bullet and enemy collisions are resolved using axis-aligned bounding box overlap checks.
+Objects are first marked as inactive and then physically removed using the erase–remove idiom.
+Collision resolution is deterministic due to post-iteration cleanup and controlled loop breaks.
 
 ---
 
