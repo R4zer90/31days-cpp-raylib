@@ -129,6 +129,14 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Removed bullets and enemies using erase–remove idiom
 - Prevented multi-kill per bullet using `break`
 
+### Day 13
+- Added multi-row enemy formation (3x8 grid)
+- Implemented zigzag row offset using modulo operator
+- Added wave respawn when enemies are cleared
+- Implemented player–enemy collision detection (Game Over)
+- Added restart system (ENTER resets game state)
+- Integrated basic game state control using `gameOver` flag
+
 ---
 
 ## Concepts
@@ -152,6 +160,10 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Lifecycle management using flags
 - Advanced erase–remove usage
 - Iterator safety and post-loop cleanup
+- 2D grid generation using nested loops (rows × columns)
+- Modulo operator for pattern-based positioning
+- Basic game state management using boolean flags
+- Controlled update flow (skip logic when gameOver)
 
 ### Architecture
 - Update vs Draw separation
@@ -182,6 +194,9 @@ Decisions are executed after iteration to maintain deterministic frame logic.
 Bullet and enemy collisions are resolved using axis-aligned bounding box overlap checks.
 Objects are first marked as inactive and then physically removed using the erase–remove idiom.
 Collision resolution is deterministic due to post-iteration cleanup and controlled loop breaks.
+Enemy formations are generated using a 2D grid system with optional row offset.
+Game state is controlled via a `gameOver` flag that blocks update logic while preserving render flow.
+Wave respawning reuses the same generation logic, creating a continuous gameplay loop.
 
 ---
 
