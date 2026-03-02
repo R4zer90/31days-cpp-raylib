@@ -213,4 +213,40 @@ Wave respawning reuses the same generation logic, creating a continuous gameplay
 
 ---
 
-More updates as the project grows.
+# Game: Platformer (Day 15–?)
+
+## Overview
+
+Simple 2D platformer project focused on object-oriented programming and class structure.
+
+---
+
+## Implemented
+
+### Day 15
+- Introduced Player class with private state (x, y, speed)
+- Implemented constructor initialization
+- Separated Update and Draw logic
+- Added frame-independent horizontal movement
+- Applied basic OOP encapsulation principles
+
+---
+
+## Concepts
+
+### C++
+- `class`
+- `private` vs `public`
+- constructor definition outside class
+- member functions (`Player::Update`)
+- encapsulation basics
+
+### Raylib
+- `DrawRectangle`
+- `IsKeyDown`
+- `GetFrameTime`
+
+### Architecture
+- Player owns its state and movement logic
+- Main loop only orchestrates update/draw calls
+- Center-based positioning approach
