@@ -137,6 +137,13 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Added restart system (ENTER resets game state)
 - Integrated basic game state control using `gameOver` flag
 
+### Day 14
+- Added audio device initialization and shutdown
+- Loaded sound effects (shot, explosion, dead)
+- Triggered SFX on shoot, hit, and game over events
+- Added proper resource cleanup via UnloadSound
+- Auto-copied assets folder to build output via CMake
+
 ---
 
 ## Concepts
@@ -164,6 +171,7 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - Modulo operator for pattern-based positioning
 - Basic game state management using boolean flags
 - Controlled update flow (skip logic when gameOver)
+- Resource lifetime awareness (load / use / unload)
 
 ### Architecture
 - Update vs Draw separation
@@ -179,6 +187,11 @@ Goal: practice functions with parameters, delta time movement, and reusable clam
 - `IsKeyDown`
 - `IsKeyPressed`
 - `GetFrameTime`
+- `InitAudioDevice`
+- `LoadSound`
+- `PlaySound`
+- `UnloadSound`
+- `CloseAudioDevice`
 
 ---
 

@@ -24,3 +24,9 @@ add_executable(SpaceShooter
 )
 
 target_link_libraries(SpaceShooter PRIVATE raylib)
+
+add_custom_command(TARGET SpaceShooter POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+          ${CMAKE_SOURCE_DIR}/assets
+          $<TARGET_FILE_DIR:SpaceShooter>/assets
+)

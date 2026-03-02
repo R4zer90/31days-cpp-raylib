@@ -62,8 +62,13 @@ int main() {
 		}
 	}
 
+
 	InitWindow(screenWidth, screenHeight, "SpaceShooter");
 	SetTargetFPS(120);
+	InitAudioDevice();
+	Sound shot = LoadSound("assets/sfx/shot.wav");
+	Sound explosion = LoadSound("assets/sfx/explosion.wav");
+	Sound dead = LoadSound("assets/sfx/dead.wav");
 
 	while (!WindowShouldClose()) {
 		//##Update - Game Logic
@@ -109,6 +114,7 @@ int main() {
 				bullet.y = shipY - shipHeight / 2;
 				bullet.alive = true;
 				bullets.push_back(bullet);
+				PlaySound(shot);
 			}
 
 			//bullets logic
@@ -135,6 +141,7 @@ int main() {
 						e.alive = false;
 						bullet.alive = false;
 						score++;
+						PlaySound(explosion);
 						break;
 					}
 				}
@@ -176,6 +183,7 @@ int main() {
 
 					if (overlapX && overlapY) {
 						gameOver = true;
+						PlaySound(dead);
 						break;
 					}
 				}
@@ -249,6 +257,10 @@ int main() {
 
 		EndDrawing();
 	}
+	UnloadSound(shot);
+	UnloadSound(explosion);
+	UnloadSound(dead);
+	CloseAudioDevice();
 	CloseWindow();
 	return 0;
 }
