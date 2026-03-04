@@ -230,6 +230,16 @@ Simple 2D platformer project focused on object-oriented programming and class st
 - Added frame-independent horizontal movement
 - Applied basic OOP encapsulation principles
 
+### Day 16
+- Added gravity system using vertical velocity
+- Introduced `velocityY` variable for physics simulation
+- Implemented frame-independent falling using delta time
+
+### Day 17
+- Added ground detection using `bool onGround`
+- Implemented jump mechanic using negative vertical velocity
+- Prevented mid-air jumping using ground state check
+
 ---
 
 ## Concepts
@@ -240,6 +250,7 @@ Simple 2D platformer project focused on object-oriented programming and class st
 - constructor definition outside class
 - member functions (`Player::Update`)
 - encapsulation basics
+- `bool`
 
 ### Raylib
 - `DrawRectangle`
