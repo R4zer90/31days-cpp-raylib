@@ -240,6 +240,13 @@ Simple 2D platformer project focused on object-oriented programming and class st
 - Implemented jump mechanic using negative vertical velocity
 - Prevented mid-air jumping using ground state check
 
+### Day 18
+- Introduced 2D tilemap using int array (12x16)
+- Implemented nested for-loops for map initialization and rendering
+- Added basic tile rendering with grid-based positioning
+- Implemented ground detection using tile under player
+- Added Land() to snap player to tile top and reset vertical velocity
+
 ---
 
 ## Concepts
