@@ -247,6 +247,21 @@ Simple 2D platformer project focused on object-oriented programming and class st
 - Implemented ground detection using tile under player
 - Added Land() to snap player to tile top and reset vertical velocity
 
+### Day 19
+- Introduced `GameObject` base class
+- Moved shared position (`x`, `y`) to base class
+- Implemented inheritance (`Player : GameObject`)
+- Removed duplicated position variables from Player
+- Moved `GetX()` and `GetY()` getters to GameObject
+
+### Day 20
+- Added `Coin` gameplay object inheriting from `GameObject`
+- Implemented coin rendering using `DrawRing`
+- Added collected state system (`Collect()` / `IsCollected()`)
+- Implemented player–coin collision using `CheckCollisionCircleRec`
+- Added score system
+- Added HUD displaying score using `DrawText`
+
 ---
 
 ## Concepts
@@ -258,13 +273,28 @@ Simple 2D platformer project focused on object-oriented programming and class st
 - member functions (`Player::Update`)
 - encapsulation basics
 - `bool`
+- inheritance (`class Derived : Base`)
+- base class reuse
 
 ### Raylib
 - `DrawRectangle`
 - `IsKeyDown`
 - `GetFrameTime`
+- `DrawRing`
+- `CheckCollisionCircleRec`
+- `TextFormat`
 
 ### Architecture
 - Player owns its state and movement logic
 - Main loop only orchestrates update/draw calls
 - Center-based positioning approach
+- shared base class for world objects (`GameObject`)
+- object state control via boolean flags
+
+## Technical Summary
+
+Player physics is simulated using velocity and gravity applied each frame.
+Tile-based ground detection checks the tile directly under the player and snaps the character to the tile surface when landing.
+Gameplay objects share position data through a common `GameObject` base class.
+Coins use a collected state flag and are removed visually after collision with the player.
+Score is tracked globally and displayed via a simple HUD.

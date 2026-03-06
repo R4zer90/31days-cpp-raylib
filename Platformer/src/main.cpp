@@ -1,9 +1,26 @@
 #include "raylib.h"
 
-class Player {
-private:
+class GameObject {
+protected:
 	float x;
 	float y;
+public:
+	float GetX() const;
+	float GetY() const;
+};
+
+class Coin : public GameObject {
+private:
+	bool collected;
+public:
+	Coin(float startX, float startY);
+	void Draw();
+	bool IsCollected() const;
+	void Collect();
+};
+
+class Player : public GameObject {
+private:
 	float speed;
 	float velocityY;
 	float gravity;
@@ -12,14 +29,32 @@ public:
 	Player();
 	void Update(float dt);
 	void Draw();
-	float GetX() const;
-	float GetY() const;
 	void SetOnGround(bool value);
 	void Land(float groundY);
 };
 
+Coin::Coin(float startX, float startY) {
+	x = startX;
+	y = startY;
+	collected = false;
+}
+
+void Coin::Draw() {
+	if (!collected) {
+		DrawRing(Vector2{ x, y }, 10, 20, 0, 360, 32, GOLD);
+	}
+}
+
+bool Coin::IsCollected() const {
+	return collected;
+}
+
+void Coin::Collect() {
+	collected = true;
+}
+
 Player::Player() {
-	x = 400;
+	x = 20;
 	y = 300;
 	speed = 200;
 	velocityY = 0;
@@ -37,11 +72,11 @@ void Player::Land(float groundY) {
 	onGround = true;
 }
 
-float Player::GetX() const {
+float GameObject::GetX() const {
 	return x;
 }
 
-float Player::GetY() const {
+float GameObject::GetY() const {
 	return y;
 }
 
@@ -68,6 +103,9 @@ int main() {
 	InitWindow(800, 600, "Platformer");
 	SetTargetFPS(120);
 	Player player;
+	Coin coin(300,500);
+	int score = 0;
+
 	//map logic
 	int map[12][16];
 	for (int row = 0; row < 12; row++) {
@@ -78,11 +116,28 @@ int main() {
 			}
 		}
 	}
-
+	
 	while (!WindowShouldClose()) {
 		//Update
+		player.Update(GetFrameTime());
+
 		float px = player.GetX();
 		float py = player.GetY();
+		
+		Rectangle playerRect{
+			px - 20,
+			py - 20,
+			40,
+			40
+		};
+
+		if (!coin.IsCollected()) {
+			if (CheckCollisionCircleRec(Vector2{ coin.GetX(), coin.GetY() }, 20, playerRect)) {
+				coin.Collect();
+				score++;
+			}
+		}
+
 		int colUnder = px / 50;
 		int rowUnder = (py + 20) / 50;
 		
@@ -99,9 +154,7 @@ int main() {
 		else {
 			player.SetOnGround(false);
 		}
-
-		player.Update(GetFrameTime());
-
+		
 		//Draw
 		BeginDrawing();
 		ClearBackground(BLACK);
@@ -119,7 +172,9 @@ int main() {
 				}
 			}
 		}
+		DrawText(TextFormat("Score: %d", score), 20, 20, 20, WHITE);
 		player.Draw();
+		coin.Draw();
 		EndDrawing();
 	}
 	CloseWindow();
