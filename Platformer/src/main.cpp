@@ -1,110 +1,16 @@
 #include "raylib.h"
-
-class GameObject {
-protected:
-	float x;
-	float y;
-public:
-	float GetX() const;
-	float GetY() const;
-};
-
-class Coin : public GameObject {
-private:
-	bool collected;
-public:
-	Coin(float startX, float startY);
-	void Draw();
-	bool IsCollected() const;
-	void Collect();
-};
-
-class Player : public GameObject {
-private:
-	float speed;
-	float velocityY;
-	float gravity;
-	bool onGround;
-public:
-	Player();
-	void Update(float dt);
-	void Draw();
-	void SetOnGround(bool value);
-	void Land(float groundY);
-};
-
-Coin::Coin(float startX, float startY) {
-	x = startX;
-	y = startY;
-	collected = false;
-}
-
-void Coin::Draw() {
-	if (!collected) {
-		DrawRing(Vector2{ x, y }, 10, 20, 0, 360, 32, GOLD);
-	}
-}
-
-bool Coin::IsCollected() const {
-	return collected;
-}
-
-void Coin::Collect() {
-	collected = true;
-}
-
-Player::Player() {
-	x = 20;
-	y = 300;
-	speed = 200;
-	velocityY = 0;
-	gravity = 800;
-	onGround = false;
-}
-
-void Player::Draw() {
-	DrawRectangle(x-20, y-20, 40, 40, WHITE);
-}
-
-void Player::Land(float groundY) {
-	y = groundY;
-	velocityY = 0;
-	onGround = true;
-}
-
-float GameObject::GetX() const {
-	return x;
-}
-
-float GameObject::GetY() const {
-	return y;
-}
-
-void Player::SetOnGround(bool value) {
-	onGround = value;
-}
-
-void Player::Update(float dt) {
-	if (IsKeyDown(KEY_LEFT)) {
-		x -= speed * dt;
-	}
-	if (IsKeyDown(KEY_RIGHT)) {
-		x += speed * dt;
-	}
-	if (IsKeyPressed(KEY_SPACE) && onGround) {
-		velocityY = -400;
- 		onGround = false;
-	}
-	velocityY += gravity * dt; 
-	y += velocityY * dt;
-}
+#include "Player.h"
+#include "Coin.h"
+#include <vector>
 
 int main() {
-	InitWindow(800, 600, "Platformer");
+	int screenHeight = 600;
+	int screenWidth = 800;
+	InitWindow(screenWidth, screenHeight, "Platformer");
 	SetTargetFPS(120);
 	Player player;
-	Coin coin(300,500);
 	int score = 0;
+	
 
 	//map logic
 	int map[12][16];
@@ -116,6 +22,14 @@ int main() {
 			}
 		}
 	}
+
+	//coins
+	std::vector<Coin> coins;
+	coins.push_back(Coin(100, 500));
+	coins.push_back(Coin(200, 400));
+	coins.push_back(Coin(300, 500));
+	coins.push_back(Coin(500, 400));
+	coins.push_back(Coin(600, 500));
 	
 	while (!WindowShouldClose()) {
 		//Update
@@ -131,10 +45,12 @@ int main() {
 			40
 		};
 
-		if (!coin.IsCollected()) {
-			if (CheckCollisionCircleRec(Vector2{ coin.GetX(), coin.GetY() }, 20, playerRect)) {
+		for (auto& coin : coins){
+			if (!coin.IsCollected()) {
+				if (CheckCollisionCircleRec(Vector2{ coin.GetX(), coin.GetY() }, 20, playerRect)) {
 				coin.Collect();
 				score++;
+				}
 			}
 		}
 
@@ -159,7 +75,7 @@ int main() {
 		BeginDrawing();
 		ClearBackground(BLACK);
 
-		//map
+		//Map Drawing
 		for (int row = 0; row < 12; row++) {
 			for (int col = 0; col < 16; col++) {
 				if (map[row][col] == 1) {
@@ -174,7 +90,14 @@ int main() {
 		}
 		DrawText(TextFormat("Score: %d", score), 20, 20, 20, WHITE);
 		player.Draw();
-		coin.Draw();
+		for (auto& coin : coins) {
+			coin.Draw();
+		}
+		if (score == coins.size())	{
+			int textWidth = MeasureText("LEVEL COMPLETE", 50);
+			DrawText("LEVEL COMPLETE", (screenWidth / 2) - (textWidth / 2), (screenHeight / 2) - (50 / 2), 50, WHITE);
+		}
+
 		EndDrawing();
 	}
 	CloseWindow();

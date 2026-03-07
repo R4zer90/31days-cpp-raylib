@@ -213,7 +213,7 @@ Wave respawning reuses the same generation logic, creating a continuous gameplay
 
 ---
 
-# Game: Platformer (Day 15–?)
+# Game: Platformer (Day 15–21)
 
 ## Overview
 
@@ -262,6 +262,13 @@ Simple 2D platformer project focused on object-oriented programming and class st
 - Added score system
 - Added HUD displaying score using `DrawText`
 
+### Day 21
+- Replaced single Coin instance with `std::vector<Coin>` to support multiple collectibles
+- Implemented range-based iteration over coins for update and rendering
+- Added multi-coin collision detection with player
+- Implemented level completion condition when all coins are collected
+- Added centered "LEVEL COMPLETE" message using `MeasureText`
+
 ---
 
 ## Concepts
@@ -275,6 +282,8 @@ Simple 2D platformer project focused on object-oriented programming and class st
 - `bool`
 - inheritance (`class Derived : Base`)
 - base class reuse
+- `std::vector<ClassType>`
+- range-based for loop with references (`for (auto& obj : container)`)
 
 ### Raylib
 - `DrawRectangle`
@@ -283,6 +292,7 @@ Simple 2D platformer project focused on object-oriented programming and class st
 - `DrawRing`
 - `CheckCollisionCircleRec`
 - `TextFormat`
+- `MeasureText`
 
 ### Architecture
 - Player owns its state and movement logic

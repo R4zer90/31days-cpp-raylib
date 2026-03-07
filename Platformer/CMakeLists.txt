@@ -21,6 +21,8 @@ FetchContent_MakeAvailable(raylib)
 
 add_executable(Platformer
   src/main.cpp
+  src/Player.cpp
+  src/Coin.cpp
 )
 
 target_link_libraries(Platformer PRIVATE raylib)
