@@ -308,3 +308,64 @@ Tile-based ground detection checks the tile directly under the player and snaps 
 Gameplay objects share position data through a common `GameObject` base class.
 Coins use a collected state flag and are removed visually after collision with the player.
 Score is tracked globally and displayed via a simple HUD.
+
+---
+
+# Game: Dungeon Crawler (Day 22–...)
+
+## Overview
+
+Procedural dungeon prototype focused on tilemaps and basic procedural generation.
+
+Goal: learn grid-based world representation, random generation, and tile-based rendering.
+
+---
+
+## Implemented
+
+### Day 22
+- Introduced dungeon tilemap using 2D array (40x40)
+- Initialized dungeon grid with walls
+- Implemented tile-based rendering system using TILE_SIZE
+- Added dungeon centering using screen offset
+- Implemented random room size generation
+- Implemented random room position generation
+- Added boundary-safe room placement with map margins
+- Carved first procedural room into dungeon grid
+- Rendered dungeon tiles based on map data
+
+---
+
+## Concepts
+
+### C++
+- 2D arrays (`int dungeon[height][width]`)
+- nested loops for grid traversal
+- procedural generation basics
+- random number generation
+- grid coordinate systems
+
+### Raylib
+- `DrawRectangle`
+- `GetRandomValue`
+- tile-based rendering
+- grid → screen coordinate conversion
+
+---
+
+## Architecture
+
+- Dungeon stored as tile grid
+- `1` represents wall
+- `0` represents floor
+- Room generation modifies tilemap data
+- Rendering iterates through grid and draws tiles based on state
+
+---
+
+## Technical Summary
+
+Dungeon generation starts by filling the map with walls.  
+A random rectangular room is generated with randomized width, height and position.  
+The room area is carved into the dungeon by replacing wall tiles with floor tiles.  
+Rendering converts grid coordinates into world coordinates using `TILE_SIZE`.
