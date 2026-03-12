@@ -334,6 +334,16 @@ Goal: learn grid-based world representation, random generation, and tile-based r
 - Carved first procedural room into dungeon grid
 - Rendered dungeon tiles based on map data
 
+### Day 23
+- Introduced `Room` struct describing dungeon room layout
+- Implemented `std::vector<Room>` to store multiple generated rooms
+- Added multi-room procedural generation
+- Implemented room carving into dungeon grid
+- Added corridor generation connecting sequential rooms
+- Implemented simple L-shaped corridor algorithm
+- Refactored dungeon system into `Map` class (`Map.h` / `Map.cpp`)
+- Separated dungeon generation and rendering logic
+
 ---
 
 ## Concepts
@@ -365,7 +375,8 @@ Goal: learn grid-based world representation, random generation, and tile-based r
 
 ## Technical Summary
 
-Dungeon generation starts by filling the map with walls.  
-A random rectangular room is generated with randomized width, height and position.  
-The room area is carved into the dungeon by replacing wall tiles with floor tiles.  
-Rendering converts grid coordinates into world coordinates using `TILE_SIZE`.
+Dungeon generation starts by filling the map with walls.
+Random rectangular rooms are generated with randomized width, height and position.
+Rooms are stored in a vector and carved into the dungeon grid.
+Each room is connected to the next one using an L-shaped corridor.
+Rendering converts grid coordinates into world coordinates using TILE_SIZE.
