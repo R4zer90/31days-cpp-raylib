@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "Map.h"
+#include "Player.h"
 
 int main() {
 	int screenHeight = 600;
@@ -13,11 +14,15 @@ int main() {
 	SetTargetFPS(120);
 	Map map;
 	map.Generate();
-		
+	Player player;
+
 	while (!WindowShouldClose()) {
+		float dt = GetFrameTime();
+		player.Update(dt);
 		BeginDrawing();
 		ClearBackground(BLACK);
 		map.Draw(offsetX, offsetY);
+		player.Draw();
 		EndDrawing();
 	}
 

@@ -344,6 +344,12 @@ Goal: learn grid-based world representation, random generation, and tile-based r
 - Refactored dungeon system into `Map` class (`Map.h` / `Map.cpp`)
 - Separated dungeon generation and rendering logic
 
+### Day 24
+- Implemented dungeon tile rendering through `Map::Draw`
+- Introduced `Player` class for dungeon exploration
+- Added WASD player movement using delta time
+- Integrated player update and rendering into main game loop
+- Refactored main loop to orchestrate Map and Player systems
 ---
 
 ## Concepts
@@ -354,12 +360,19 @@ Goal: learn grid-based world representation, random generation, and tile-based r
 - procedural generation basics
 - random number generation
 - grid coordinate systems
+- `class` for world systems (`Map`)
+- `struct` for simple data containers (`Room`)
+- `std::vector<Room>` for dynamic room storage
+- object composition (`Map` managing rooms and tiles)
+- separation of generation and rendering logic
 
 ### Raylib
 - `DrawRectangle`
 - `GetRandomValue`
 - tile-based rendering
 - grid → screen coordinate conversion
+- `DrawCircle`
+- player input using `IsKeyDown`
 
 ---
 
@@ -370,6 +383,9 @@ Goal: learn grid-based world representation, random generation, and tile-based r
 - `0` represents floor
 - Room generation modifies tilemap data
 - Rendering iterates through grid and draws tiles based on state
+- Map system responsible for dungeon generation and rendering
+- Player entity updated independently from world generation
+- Main loop orchestrates world update and rendering
 
 ---
 
@@ -380,3 +396,4 @@ Random rectangular rooms are generated with randomized width, height and positio
 Rooms are stored in a vector and carved into the dungeon grid.
 Each room is connected to the next one using an L-shaped corridor.
 Rendering converts grid coordinates into world coordinates using TILE_SIZE.
+Player movement uses delta-time based input handling and is rendered independently from the dungeon system.
