@@ -59,11 +59,46 @@ void Map::Generate(){
 	}
 }
 
-void Map::Draw(int offsetX, int offsetY){
-	for (int row = 0; row < MAP_HEIGHT; row++) {
-		for (int col = 0; col < MAP_WIDTH; col++) {
+void Map::Draw(const Camera2D& camera, int screenWidth, int screenHeight) {
+	float halfVisibleWidth = screenWidth / (2.0f * camera.zoom);
+	float halfVisibleHeight = screenHeight / (2.0f * camera.zoom);
+
+	float left = camera.target.x - halfVisibleWidth;
+	float right = camera.target.x + halfVisibleWidth;
+	float top = camera.target.y - halfVisibleHeight;
+	float bottom = camera.target.y + halfVisibleHeight;
+
+	int startCol = left / TILE_SIZE;
+	int endCol = right / TILE_SIZE;
+	int startRow = top / TILE_SIZE;
+	int endRow = bottom / TILE_SIZE;
+
+	if (startCol < 0) startCol = 0;
+	if (startRow < 0) startRow = 0;
+	if (endCol >= MAP_WIDTH) endCol = MAP_WIDTH - 1;
+	if (endRow >= MAP_HEIGHT) endRow = MAP_HEIGHT - 1;
+
+	for (int row = startRow; row <= endRow; row++) {
+		for (int col = startCol; col <= endCol; col++) {
 			if (dungeon[row][col] == 1)
-				DrawRectangle(offsetX + col * TILE_SIZE, offsetY + row * TILE_SIZE, TILE_SIZE, TILE_SIZE, WHITE);
+				DrawRectangle(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, WHITE);
 		}
 	}
+}
+
+bool Map::IsWall(int row, int col) const {
+	if (row < 0 || row >= MAP_HEIGHT || col < 0 || col >= MAP_WIDTH)
+		return true;
+
+	return dungeon[row][col] == 1;
+}
+
+Vector2 Map::GetPlayerSpawnPosition() const {
+	int centerCol = rooms[0].x + rooms[0].width / 2;
+	int centerRow = rooms[0].y + rooms[0].height / 2;
+
+	float spawnX = centerCol * TILE_SIZE + TILE_SIZE / 2.0f;
+	float spawnY = centerRow * TILE_SIZE + TILE_SIZE / 2.0f;
+
+	return Vector2{ spawnX, spawnY };
 }

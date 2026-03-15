@@ -315,9 +315,9 @@ Score is tracked globally and displayed via a simple HUD.
 
 ## Overview
 
-Procedural dungeon prototype focused on tilemaps and basic procedural generation.
+Procedural dungeon crawler prototype focused on tilemaps, procedural generation, camera systems, and exploration.
 
-Goal: learn grid-based world representation, random generation, and tile-based rendering.
+Goal: learn grid-based world representation, random generation, tile-based rendering, camera handling, and collision against dungeon walls.
 
 ---
 
@@ -350,6 +350,19 @@ Goal: learn grid-based world representation, random generation, and tile-based r
 - Added WASD player movement using delta time
 - Integrated player update and rendering into main game loop
 - Refactored main loop to orchestrate Map and Player systems
+
+### Day 25
+- Introduced `Camera2D` for dungeon exploration
+- Switched dungeon rendering from screen-space offset to world-space coordinates
+- Implemented camera follow system centered on player position
+- Added fullscreen 1920x1080 support
+- Increased tile scale and expanded dungeon size to 80x80
+- Added camera zoom for improved gameplay readability
+- Implemented tile-based wall collision using `Map::IsWall`
+- Added safe player spawn using first room center
+- Implemented camera clamp to map boundaries
+- Optimized rendering to draw only visible tiles inside camera view
+
 ---
 
 ## Concepts
@@ -365,6 +378,9 @@ Goal: learn grid-based world representation, random generation, and tile-based r
 - `std::vector<Room>` for dynamic room storage
 - object composition (`Map` managing rooms and tiles)
 - separation of generation and rendering logic
+- getter/setter usage for controlled access to player position
+- tile-based collision checks using world position to grid conversion
+- visibility range calculation for partial map rendering
 
 ### Raylib
 - `DrawRectangle`
@@ -373,6 +389,10 @@ Goal: learn grid-based world representation, random generation, and tile-based r
 - grid → screen coordinate conversion
 - `DrawCircle`
 - player input using `IsKeyDown`
+- `Camera2D`
+- `BeginMode2D` / `EndMode2D`
+- camera zoom and target tracking
+- fullscreen mode with `ToggleFullscreen`
 
 ---
 
@@ -397,3 +417,7 @@ Rooms are stored in a vector and carved into the dungeon grid.
 Each room is connected to the next one using an L-shaped corridor.
 Rendering converts grid coordinates into world coordinates using TILE_SIZE.
 Player movement uses delta-time based input handling and is rendered independently from the dungeon system.
+Camera-based rendering converts the dungeon into a scrolling world view centered on the player.
+Tile collision is resolved by converting world coordinates into grid coordinates and querying wall data through the Map system.
+Player spawn is derived from procedural room data to guarantee a valid floor position.
+Rendering performance is improved by drawing only tiles visible inside the current camera bounds.
