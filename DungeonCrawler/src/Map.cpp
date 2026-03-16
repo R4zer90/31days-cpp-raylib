@@ -102,3 +102,7 @@ Vector2 Map::GetPlayerSpawnPosition() const {
 
 	return Vector2{ spawnX, spawnY };
 }
+
+const std::vector<Room>& Map::GetRooms() const {
+	return rooms;
+}

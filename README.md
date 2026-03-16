@@ -363,6 +363,18 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - Implemented camera clamp to map boundaries
 - Optimized rendering to draw only visible tiles inside camera view
 
+### Day 26
+- Introduced Enemy class representing hostile dungeon entities
+- Implemented enemy rendering and position system
+- Added std::vector<Enemy> for managing multiple enemies
+- Implemented procedural enemy spawning inside dungeon rooms
+- Excluded player spawn room from enemy generation
+- Implemented enemy update loop integrated into main game loop
+- Added detection range system for enemy AI
+- Implemented player tracking behavior when inside detection range
+- Added tile-based enemy collision using Map::IsWall
+- Implemented axis-separated collision checks to prevent wall clipping
+
 ---
 
 ## Concepts
@@ -381,6 +393,9 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - getter/setter usage for controlled access to player position
 - tile-based collision checks using world position to grid conversion
 - visibility range calculation for partial map rendering
+- std::vector<Enemy> for entity management
+- simple enemy AI using distance detection
+- axis-separated collision resolution
 
 ### Raylib
 - `DrawRectangle`
@@ -421,3 +436,6 @@ Camera-based rendering converts the dungeon into a scrolling world view centered
 Tile collision is resolved by converting world coordinates into grid coordinates and querying wall data through the Map system.
 Player spawn is derived from procedural room data to guarantee a valid floor position.
 Rendering performance is improved by drawing only tiles visible inside the current camera bounds.
+Enemy entities are procedurally spawned in dungeon rooms excluding the player spawn room.
+Enemies detect the player within a configurable detection range and move toward the player using normalized direction vectors.
+Movement collision is resolved using axis-separated tile checks against the dungeon grid.

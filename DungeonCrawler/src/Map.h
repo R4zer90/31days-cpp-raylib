@@ -12,6 +12,7 @@ public:
 	void Draw(const Camera2D& camera, int screenWidth, int screenHeight);
 	bool IsWall(int row, int col) const;
 	Vector2 GetPlayerSpawnPosition() const;
+	const std::vector<Room>& GetRooms() const;
 private:
 	int dungeon[MAP_HEIGHT][MAP_WIDTH];
 	std::vector<Room> rooms;

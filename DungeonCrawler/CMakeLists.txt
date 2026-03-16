@@ -24,6 +24,7 @@ add_executable(DungeonCrawler
   src/Map.cpp
   src/Room.cpp
   src/Player.cpp
+  src/Enemy.cpp
 )
 
 target_include_directories(DungeonCrawler PRIVATE

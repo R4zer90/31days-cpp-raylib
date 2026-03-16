@@ -1,8 +1,7 @@
 #pragma once
 #include "Map.h"
 
-class Player
-{
+class Player{
 private:
     float x;
     float y;
