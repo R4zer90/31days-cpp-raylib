@@ -2,15 +2,20 @@
 #include "raylib.h"
 #include <cmath>
 
-Enemy::Enemy(){
+Enemy::Enemy() {
 	x = 0;
 	y = 0;
 	speed = 100;
 	alive = true;
 	detectionRange = 300;
+	health = 3;
 }
 
 void Enemy::Draw() {
+	if (!alive) {
+		return;
+	}
+
 	DrawRectangle(x - 4, y - 4, 8, 8, RED);
 }
 
@@ -28,11 +33,15 @@ float Enemy::GetY() const {
 }
 
 void Enemy::Update(float dt, float playerX, float playerY, const Map& map) {
+	if (!alive) {
+		return;
+	}
+
 	float dx = playerX - x;
 	float dy = playerY - y;
 	float distance = sqrt(dx * dx + dy * dy);
 
-	if (distance < detectionRange) {
+	if (distance < detectionRange && distance > 0.0f) {
 		float dirX = dx / distance;
 		float dirY = dy / distance;
 
@@ -52,4 +61,21 @@ void Enemy::Update(float dt, float playerX, float playerY, const Map& map) {
 			y = newY;
 		}
 	}
+}
+
+void Enemy::TakeDamage(int amount) {
+	if (!alive) {
+		return;
+	}
+
+	health -= amount;
+
+	if (health <= 0) {
+		health = 0;
+		alive = false;
+	}
+}
+
+bool Enemy::IsDead() const {
+	return !alive;
 }

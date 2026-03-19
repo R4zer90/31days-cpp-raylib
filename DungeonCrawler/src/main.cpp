@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <vector>
+#include <cmath>
 
 int main() {
 	int screenHeight = 1080;
@@ -46,7 +47,23 @@ int main() {
 		player.Update(dt, map);
 		for (Enemy& enemy : enemies) {
 			enemy.Update(dt, player.GetX(), player.GetY(), map);
+
+			if (CheckCollisionCircles(
+				Vector2{ player.GetX(), player.GetY() }, 8.0f,
+				Vector2{ enemy.GetX(), enemy.GetY() }, 8.0f)) {
+				player.TakeDamage(1);
+			}
+
+			float dx = enemy.GetX() - player.GetX();
+			float dy = enemy.GetY() - player.GetY();
+			float distance = sqrt(dx * dx + dy * dy);
+
+			if (distance < 50.0f && player.CanAttack()) {
+				enemy.TakeDamage(1);
+				player.ResetAttackTimer();
+			}
 		}
+
 		float camX = player.GetX();
 		float camY = player.GetY();
 
@@ -69,6 +86,9 @@ int main() {
 			enemy.Draw();
 		}
 		EndMode2D();
+
+		DrawText(TextFormat("HP: %i / %i", player.GetHealth(), player.GetMaxHealth()), 20, 20, 30, GREEN);
+
 		EndDrawing();
 	}
 

@@ -8,6 +8,7 @@ private:
 	float speed;
 	bool alive;
 	float detectionRange;
+	int health;
 
 public:
 	Enemy();
@@ -16,4 +17,6 @@ public:
 	float GetX() const;
 	float GetY() const;
 	void Update(float dt, float playerX, float playerY, const Map& map);
+	void TakeDamage(int amount);
+	bool IsDead() const;
 };
