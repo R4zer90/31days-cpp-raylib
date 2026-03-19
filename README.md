@@ -375,6 +375,18 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - Added tile-based enemy collision using Map::IsWall
 - Implemented axis-separated collision checks to prevent wall clipping
 
+### Day 27
+- Added player health system (HP / max HP)
+- Implemented damage system with cooldown to prevent instant death
+- Added enemy-to-player collision damage using circle collision
+- Introduced player auto-attack system with configurable attack range
+- Implemented attack cooldown system for controlled combat pacing
+- Added enemy health and death state system
+- Prevented dead enemies from updating and rendering
+- Implemented basic combat loop (player ↔ enemy interaction)
+- Added HUD displaying player health using `DrawText`
+- Introduced simple visual attack feedback (attack radius indicator)
+
 ---
 
 ## Concepts
@@ -396,6 +408,10 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - std::vector<Enemy> for entity management
 - simple enemy AI using distance detection
 - axis-separated collision resolution
+- basic combat system design
+- cooldown systems (timers for actions)
+- simple distance-based interaction (sqrt, vector math)
+- entity state management (`alive`, `health`)
 
 ### Raylib
 - `DrawRectangle`
@@ -408,6 +424,8 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - `BeginMode2D` / `EndMode2D`
 - camera zoom and target tracking
 - fullscreen mode with `ToggleFullscreen`
+- CheckCollisionCircles
+- DrawCircleLines
 
 ---
 
@@ -439,3 +457,8 @@ Rendering performance is improved by drawing only tiles visible inside the curre
 Enemy entities are procedurally spawned in dungeon rooms excluding the player spawn room.
 Enemies detect the player within a configurable detection range and move toward the player using normalized direction vectors.
 Movement collision is resolved using axis-separated tile checks against the dungeon grid.
+Player combat system introduces bidirectional interaction between player and enemies.
+Damage is controlled using cooldown timers to avoid frame-based instant depletion.
+Enemy entities maintain health and alive state, allowing for controlled removal from gameplay.
+Simple distance-based attack system enables auto-attack behavior within defined range.
+HUD provides real-time feedback of player state.
