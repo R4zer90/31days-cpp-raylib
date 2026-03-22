@@ -1,6 +1,7 @@
 #pragma once
 #include "Map.h"
 
+class Player;
 class Enemy {
 private:
 	float x;
@@ -9,6 +10,7 @@ private:
 	bool alive;
 	float detectionRange;
 	int health;
+	bool lootDropped;
 
 public:
 	Enemy();
@@ -19,4 +21,6 @@ public:
 	void Update(float dt, float playerX, float playerY, const Map& map);
 	void TakeDamage(int amount);
 	bool IsDead() const;
+	bool HasDroppedLoot() const;
+	void DropLoot(Player& player);
 };

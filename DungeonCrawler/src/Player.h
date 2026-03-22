@@ -1,5 +1,7 @@
 #pragma once
 #include "Map.h"
+#include <map>
+#include <string>
 
 class Player{
 private:
@@ -13,6 +15,7 @@ private:
     float attackTimer;
     float attackCooldown;
     float attackEffectTimer;
+    std::map<std::string, int> inventory;
 
 public:
     Player();
@@ -26,4 +29,7 @@ public:
     void TakeDamage(int amount);
     bool CanAttack() const;
     void ResetAttackTimer();
+    void AddItem(const std::string& item, int amount);
+    int GetItemCount(const std::string& item) const;
+    void Heal(int amount);
 };

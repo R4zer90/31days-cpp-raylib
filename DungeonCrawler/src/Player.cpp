@@ -104,3 +104,25 @@ void Player::ResetAttackTimer() {
     attackTimer = 0.0f;
     attackEffectTimer = 0.2f;
 }
+
+void Player::AddItem(const std::string& item, int amount) {
+    inventory[item] += amount;
+}
+
+int Player::GetItemCount(const std::string& item) const {
+    auto it = inventory.find(item);
+
+    if (it != inventory.end()) {
+        return it->second;
+    }
+
+    return 0;
+}
+
+void Player::Heal(int amount) {
+    health += amount;
+
+    if (health > maxHealth) {
+        health = maxHealth;
+    }
+}

@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "raylib.h"
 #include <cmath>
+#include "Player.h"
 
 Enemy::Enemy() {
 	x = 0;
@@ -9,6 +10,7 @@ Enemy::Enemy() {
 	alive = true;
 	detectionRange = 300;
 	health = 3;
+	lootDropped = false;
 }
 
 void Enemy::Draw() {
@@ -78,4 +80,15 @@ void Enemy::TakeDamage(int amount) {
 
 bool Enemy::IsDead() const {
 	return !alive;
+}
+
+bool Enemy::HasDroppedLoot() const {
+	return lootDropped;
+}
+
+void Enemy::DropLoot(Player& player) {
+	if (!alive && !lootDropped) {
+		player.AddItem("gold", 1);
+		lootDropped = true;
+	}
 }

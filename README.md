@@ -387,6 +387,27 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - Added HUD displaying player health using `DrawText`
 - Introduced simple visual attack feedback (attack radius indicator)
 
+### Day 28
+- Introduced player inventory system using std::map
+- Implemented AddItem and GetItemCount methods
+- Added basic HUD displaying inventory values (gold)
+- Introduced loot system from enemies
+- Refactored loot logic into Enemy class (DropLoot)
+- Added loot state tracking to prevent duplicate drops
+- Implemented cleanup of dead enemies using erase–remove idiom
+
+### Day 29
+- Introduced Item class for world pickups
+- Implemented item spawning inside dungeon rooms
+- Added std::vector<Item> for item management
+- Implemented item rendering and collected state
+- Added player–item collision detection
+- Implemented item pickup system (inventory integration)
+- Added support for multiple item types (gold, potion)
+- Implemented healing system using potion items
+- Added visual distinction between item types (color-based)
+- Implemented cleanup of collected items using erase–remove idiom
+
 ---
 
 ## Concepts
@@ -412,6 +433,11 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - cooldown systems (timers for actions)
 - simple distance-based interaction (sqrt, vector math)
 - entity state management (`alive`, `health`)
+- associative containers (`std::map`)
+- basic inventory system design
+- item abstraction (`Item` class)
+- string-based item identification
+- container cleanup patterns for dynamic objects
 
 ### Raylib
 - `DrawRectangle`
@@ -426,6 +452,7 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - fullscreen mode with `ToggleFullscreen`
 - CheckCollisionCircles
 - DrawCircleLines
+- CheckCollisionCircles (player–item interaction)
 
 ---
 
@@ -462,3 +489,8 @@ Damage is controlled using cooldown timers to avoid frame-based instant depletio
 Enemy entities maintain health and alive state, allowing for controlled removal from gameplay.
 Simple distance-based attack system enables auto-attack behavior within defined range.
 HUD provides real-time feedback of player state.
+Item system introduces collectible objects into the dungeon world.
+Items are represented as entities with position, type and amount.
+Player interaction is handled via collision detection, triggering inventory updates or gameplay effects.
+Different item types enable extensible gameplay systems such as healing and resource collection.
+Collected items are removed from the game world using erase–remove idiom for efficient memory management.
