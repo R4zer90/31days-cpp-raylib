@@ -366,13 +366,13 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 ### Day 26
 - Introduced Enemy class representing hostile dungeon entities
 - Implemented enemy rendering and position system
-- Added std::vector<Enemy> for managing multiple enemies
+- Added `std::vector<Enemy>` for managing multiple enemies
 - Implemented procedural enemy spawning inside dungeon rooms
 - Excluded player spawn room from enemy generation
 - Implemented enemy update loop integrated into main game loop
 - Added detection range system for enemy AI
 - Implemented player tracking behavior when inside detection range
-- Added tile-based enemy collision using Map::IsWall
+- Added tile-based enemy collision using `Map::IsWall`
 - Implemented axis-separated collision checks to prevent wall clipping
 
 ### Day 27
@@ -388,18 +388,18 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - Introduced simple visual attack feedback (attack radius indicator)
 
 ### Day 28
-- Introduced player inventory system using std::map
-- Implemented AddItem and GetItemCount methods
+- Introduced player inventory system using `std::map`
+- Implemented `AddItem` and `GetItemCount` methods
 - Added basic HUD displaying inventory values (gold)
 - Introduced loot system from enemies
-- Refactored loot logic into Enemy class (DropLoot)
+- Refactored loot logic into Enemy class (`DropLoot`)
 - Added loot state tracking to prevent duplicate drops
 - Implemented cleanup of dead enemies using erase–remove idiom
 
 ### Day 29
 - Introduced Item class for world pickups
 - Implemented item spawning inside dungeon rooms
-- Added std::vector<Item> for item management
+- Added `std::vector<Item>` for item management
 - Implemented item rendering and collected state
 - Added player–item collision detection
 - Implemented item pickup system (inventory integration)
@@ -407,6 +407,29 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - Implemented healing system using potion items
 - Added visual distinction between item types (color-based)
 - Implemented cleanup of collected items using erase–remove idiom
+
+### Day 30
+- Implemented save system using file streams (`std::ofstream`, `std::ifstream`)
+- Saved player state including position, health and gold
+- Implemented load system restoring player state from file
+- Added quick-save (F5) and quick-load (F9)
+- Introduced basic text-based serialization format
+- Implemented file open validation using `is_open()`
+- Added setter methods for controlled state restoration (`SetHealth`, `SetItemCount`)
+- Fixed inventory overwrite issue during load
+- Added safe load behavior using fallback spawn position
+
+### Day 31
+- Implemented Game Over system triggered by player health reaching zero
+- Blocked gameplay update logic when player is dead
+- Added Game Over UI message
+- Implemented restart system using R key
+- Regenerated dungeon on restart
+- Reset player state on restart
+- Cleared and rebuilt enemy and item containers
+- Reinitialized enemies and items from newly generated dungeon rooms
+- Added restart instruction text for improved user experience
+- Established full gameplay loop (play → death → restart)
 
 ---
 
@@ -426,18 +449,25 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - getter/setter usage for controlled access to player position
 - tile-based collision checks using world position to grid conversion
 - visibility range calculation for partial map rendering
-- std::vector<Enemy> for entity management
+- `std::vector<Enemy>` for entity management
 - simple enemy AI using distance detection
 - axis-separated collision resolution
 - basic combat system design
 - cooldown systems (timers for actions)
-- simple distance-based interaction (sqrt, vector math)
+- simple distance-based interaction (`sqrt`, vector math)
 - entity state management (`alive`, `health`)
 - associative containers (`std::map`)
 - basic inventory system design
 - item abstraction (`Item` class)
 - string-based item identification
 - container cleanup patterns for dynamic objects
+- file streams (`std::ofstream`, `std::ifstream`)
+- basic serialization and deserialization
+- persistent state saving and loading
+- setter methods for controlled state restoration
+- state-based flow control using boolean flags
+- reinitialization of objects through constructor reset
+- clearing and rebuilding dynamic containers
 
 ### Raylib
 - `DrawRectangle`
@@ -450,9 +480,13 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - `BeginMode2D` / `EndMode2D`
 - camera zoom and target tracking
 - fullscreen mode with `ToggleFullscreen`
-- CheckCollisionCircles
-- DrawCircleLines
-- CheckCollisionCircles (player–item interaction)
+- `CheckCollisionCircles`
+- `DrawCircleLines`
+- `CheckCollisionCircles` (player–item interaction)
+- `IsKeyPressed`
+- `DrawText`
+- `TextFormat`
+- screen-space UI rendering outside `BeginMode2D`
 
 ---
 
@@ -466,6 +500,13 @@ Goal: learn grid-based world representation, random generation, tile-based rende
 - Map system responsible for dungeon generation and rendering
 - Player entity updated independently from world generation
 - Main loop orchestrates world update and rendering
+- Save system separated into dedicated `SaveSystem` module
+- Player state persistence handled externally through getters and setters
+- Update logic gated by game state (`isGameOver`)
+- Rendering continues even when gameplay update is blocked
+- Restart system rebuilds dungeon, enemies and items from procedural source data
+- Dynamic world objects managed through `std::vector` containers
+- Gameplay loop structured around exploration, combat, death and restart
 
 ---
 
@@ -494,3 +535,7 @@ Items are represented as entities with position, type and amount.
 Player interaction is handled via collision detection, triggering inventory updates or gameplay effects.
 Different item types enable extensible gameplay systems such as healing and resource collection.
 Collected items are removed from the game world using erase–remove idiom for efficient memory management.
+Save system persists selected player state using a simple text file format.
+Load system restores saved values in a fixed order and applies them through setter methods.
+Game Over state blocks update logic while preserving rendering and UI feedback.
+Restart logic regenerates the dungeon and rebuilds gameplay entities, creating a complete gameplay loop.

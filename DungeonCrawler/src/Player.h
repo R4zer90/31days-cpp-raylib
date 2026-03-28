@@ -32,4 +32,6 @@ public:
     void AddItem(const std::string& item, int amount);
     int GetItemCount(const std::string& item) const;
     void Heal(int amount);
+    void SetHealth(int newHealth);
+    void SetItemCount(const std::string& item, int amount);
 };

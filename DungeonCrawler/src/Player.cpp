@@ -5,7 +5,7 @@ Player::Player(){
     x = 100;
     y = 100;
     speed = 200;
-    health = 100;
+    health = 1;
     maxHealth = 100;
     damageTimer = 0.0f;
     damageCooldown = 1.0f;
@@ -125,4 +125,18 @@ void Player::Heal(int amount) {
     if (health > maxHealth) {
         health = maxHealth;
     }
+}
+
+void Player::SetHealth(int newHealth) {
+    health = newHealth;
+
+    if (health < 0)
+        health = 0;
+
+    if (health > maxHealth)
+        health = maxHealth;
+}
+
+void Player::SetItemCount(const std::string& item, int amount) {
+    inventory[item] = amount;
 }
